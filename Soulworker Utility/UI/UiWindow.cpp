@@ -158,7 +158,7 @@ BOOL UiWindow::SetFontList() {
 		char fontPath[MAX_BUFFER_LENGTH] = { 0 };
 		strcat_s(fontPath, path);
 		strcat_s(fontPath, fd.name);
-		io.Fonts->AddFontFromFileTTF(fontPath, 32, &config, io.Fonts->GetGlyphRangesKorean());
+		io.Fonts->AddFontFromFileTTF(fontPath, 32, &config, io.Fonts->GetGlyphRangesDefault());
 	} while (_findnext(handle, &fd) != -1);
 	
 	_findclose(handle);

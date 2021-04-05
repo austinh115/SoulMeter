@@ -125,6 +125,8 @@ VOID SWDamageMeter::InsertPlayerMetadata(UINT32 id, CHAR* str, BYTE job) {
 }
 
 const CHAR* SWDamageMeter::GetPlayerName(UINT32 id) {
+	if (id == _myID)
+		return "YOU";
 
 	for (auto itr = _playerMetadata.begin(); itr != _playerMetadata.end(); itr++) {
 		if ((*itr)->_id == id) {
@@ -134,11 +136,10 @@ const CHAR* SWDamageMeter::GetPlayerName(UINT32 id) {
 			return (*itr)->_name;
 		}
 	}
-
-	if (id == _myID)
-		return "YOU";
-
-	return PLAYER_NAME_CANT_FIND;
+	
+	auto s = std::to_string(id).c_str();
+	return s;
+	//return PLAYER_NAME_CANT_FIND;
 }
 
 BYTE SWDamageMeter::GetPlayerJob(UINT32 id) {

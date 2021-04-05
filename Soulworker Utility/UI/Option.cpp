@@ -23,7 +23,7 @@ UiOption::~UiOption() {
 
 BOOL UiOption::ShowStyleSelector(const CHAR* label) {
 
-	ImGui::Text(u8"기본 스타일을 선택하세요.");
+	ImGui::Text(u8"Choose the default style.");
 
 	if (ImGui::Combo(label, &_styleIndex, "Classic\0Dark\0Light\0"))
 	{
@@ -42,17 +42,17 @@ BOOL UiOption::ShowFontSelector() {
 
 	ImFont* font_current = ImGui::GetFont();
 
-	ImGui::Text(u8"Font Scale을 조정하여 Table 크기를 조정 할 수 있습니다.");
+	ImGui::Text(u8"You can adjust the size of the table by adjusting the Font Scale.");
 	ImGui::DragFloat("Font Scale", &_fontScale, 0.005f, 0.3f, 2.0f, "%.1f");
 
 	font_current->Scale = _fontScale;
 
-	if (ImGui::Checkbox(u8"단위 설정(1K)", (bool*)&_is1K)) {
+	if (ImGui::Checkbox(u8"Unit setting (1K)", (bool*)&_is1K)) {
 		if (_is1M)
 			_is1M = FALSE;
 	}
 
-	if (ImGui::Checkbox(u8"단위 설정(1M)", (bool*)&_is1M)) {
+	if (ImGui::Checkbox(u8"Unit setting (1M)", (bool*)&_is1M)) {
 		if (_is1K)
 			_is1K = FALSE;
 	}
@@ -74,13 +74,13 @@ BOOL UiOption::ShowTableOption() {
 	ImGui::ColorEdit4("##ColorBgr", (FLOAT*)&style.Colors[2], ImGuiColorEditFlags_None); 
 	ImGui::SameLine();	ImGui::Text(ImGui::GetStyleColorName(2));
 	ImGui::ColorEdit4("##ColorOutline", (FLOAT*)&_outlineColor, ImGuiColorEditFlags_None);
-	ImGui::SameLine();	ImGui::Text(u8"텍스트 Outline 색상");
+	ImGui::SameLine();	ImGui::Text(u8"Text outline color");
 	ImGui::ColorEdit4("##ColorActiveColor", (FLOAT*)&_activeColor[1], ImGuiColorEditFlags_None);
 	ImGui::SameLine();	ImGui::Text(u8"Active Color");
 	ImGui::ColorEdit4("##ColorInActiveColor", (FLOAT*)&_activeColor[0], ImGuiColorEditFlags_None);
 	ImGui::SameLine();	ImGui::Text(u8"InActive Color");
 
-	const char job[10][32] = { {u8"Unknown"}, {u8"하루"}, {u8"고윈"}, {u8"릴퀴"}, {u8"진따"}, {u8"스텔라"},{u8"이리스"}, {u8"치이"}, {u8"콩프넬"}, {u8"tag: Big Tits(이나비)"} };
+	const char job[10][32] = { {u8"Unknown"}, {u8"Haru"}, {u8"Erwin"}, {u8"Lily"}, {u8"Jin"}, {u8"Stella"},{u8"Iris"}, {u8"Chii"}, {u8"Ephnel"}, {u8"Lee Nabi"} };
 
 	for (int i = 0; i < 10; i++) {
 		ImGui::PushID(i);
@@ -89,7 +89,7 @@ BOOL UiOption::ShowTableOption() {
 
 		if (memcmp(&_jobColor[i], &_jobBasicColor[i], sizeof(ImVec4)) != 0) {
 			ImGui::SameLine(0.0f, style.ItemInnerSpacing.x); 
-			if (ImGui::Button(u8"기본 색상으로 바꾸기")) {
+			if (ImGui::Button(u8"Replace with default color")) {
 				_jobColor[i] = _jobBasicColor[i];
 			}
 		}
@@ -103,11 +103,11 @@ BOOL UiOption::ShowTableOption() {
 BOOL UiOption::ShowHotkeySetting() {
 
 	const char* text =
-		u8"기본 일시정지/재개 키는 CTRL + END 키입니다.\n"
-		u8"기본 초기화 키는 CTRL + DEL 키입니다.\n"
-		u8"현재는 option.XML에서 직접 수정해야 합니다.\n"
-		u8"각 키의 값은 DirectInput Code Table이 기준입니다.\n"
-		u8"각 키는 key1부터 순서대로 넣되, 할당하지 않을 키는 -1로 넣어야 합니다.\n";
+		u8"The default pause/resume key is CTRL + END.\n"
+		u8"The default reset key is CTRL + DEL.\n"
+		u8"Currently you need to modify it directly in option.xml.\n"
+		u8"The value of each key is based on the DirectInput Code Table.\n"
+		u8"Each key should be put in order from key1, but keys not to be assigned should be put in -1.\n";
 
 	ImGui::Text(text);
 
@@ -135,7 +135,7 @@ VOID UiOption::Helper() {
 	DAMAGEMETER.InsertDB(7, monster[3]);
 
 	for (INT i = 0; i < 4; i++) {
-		sprintf_s(name, 128, "%s %d",u8"플레이어", helper);
+		sprintf_s(name, 128, "%s %d",u8"Player", helper);
 		DAMAGEMETER.InsertPlayerMetadata(helper, name, helper % 10);
 		DAMAGEMETER.AddDamage(helper, helper * 10000, helper * 5000, 1, 1, helper * 2, i % 8, skill[i % 4]);
 		DAMAGEMETER.AddDamage(helper, helper * 20000, helper * 5000, 1, 1, helper * 3, (i + 1) % 8, skill[(i + 1) % 4]);
@@ -160,13 +160,13 @@ VOID UiOption::OpenOption() {
 
 	ImGui::Begin("Option", 0, ImGuiWindowFlags_None);
 
-		if (ImGui::Button(u8"더미 데미지 추가")) {
+		if (ImGui::Button(u8"Add dummy damage")) {
 			Helper();
 		}
 
 		ImGui::SameLine(); 		
 		
-		if (ImGui::Button(u8"저장하고 종료하기")) {
+		if (ImGui::Button(u8"Save and exit")) {
 			SaveOption();
 			_open = FALSE;
 		}
@@ -182,14 +182,14 @@ VOID UiOption::OpenOption() {
 		ImGui::PopItemWidth();
 
 		if (ImGui::BeginTabBar("##tabs")) {
-			if (ImGui::BeginTabItem(u8"Table 설정")) {
+			if (ImGui::BeginTabItem(u8"Table settings")) {
 				ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.5f);
 				ShowTableOption();
 				ImGui::PopItemWidth();
 				ImGui::EndTabItem();
 			}
 
-			if (ImGui::BeginTabItem(u8"Hotkey 설정")) {
+			if (ImGui::BeginTabItem(u8"Hotkey settings")) {
 				// 귀찮구만
 				ShowHotkeySetting();
 				ImGui::EndTabItem();

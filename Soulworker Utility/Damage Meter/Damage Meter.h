@@ -7,7 +7,7 @@ using namespace std;
 #define MAX_MAP_LEN 32
 
 #define PLAYER_JOB_CANT_FIND 10
-#define PLAYER_NAME_CANT_FIND u8"너 누구야?"
+#define PLAYER_NAME_CANT_FIND u8"Unknown player"
 
 #define DEBUG_DAMAGEMETER_OWNER_ID 0
 #define DEBUG_DAMAGEMETER_DB 0

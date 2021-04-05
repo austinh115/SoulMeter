@@ -34,7 +34,7 @@
 #include <dinput.h>
 
 // NPcap
-#include "npcap\Include\pcap.h"
+#include "npcap/Include/pcap.h"
 
 // WinDivert
 #include "Windivert\include\windivert.h"

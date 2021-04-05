@@ -19,10 +19,13 @@ VOID SWPacketParty::Do() {
 		BYTE job = *(p_data + sizeof(SWPACKETPARTY_DATA) + party_data->_nickSize + 1);
 
 		WCHAR utf16[MAX_NAME_LEN] = { 0 };
-		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPARTY_DATA), party_data->_nickSize);
+		size_t name_len = party_data->_nickSize > MAX_NAME_LEN ? MAX_NAME_LEN : party_data->_nickSize;
+		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPARTY_DATA), name_len);
+
+		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [PARTY PLAYER] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), party_data->_playerID, utf16, party_data->_nickSize, job);
 
 		CHAR utf8[MAX_NAME_LEN] = { 0 };
-		if (!UTF16toUTF8(utf16, utf8, MAX_NAME_LEN)) {
+		if (!UTF16toUTF8(utf16, utf8, name_len)) {
 			Log::WriteLog(const_cast<LPTSTR>(_T("Error in SWPacketParty : UTF16toUTF8 FAILED")));
 			return;
 		}
@@ -49,15 +52,15 @@ VOID SWPacketParty::Debug() {
 		BYTE job = *(p_data + sizeof(SWPACKETPARTY_DATA) + party_data->_nickSize + 1);
 
 		WCHAR utf16[MAX_NAME_LEN] = { 0 };
-		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPARTY_DATA), party_data->_nickSize);
+		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPARTY_DATA), party_data->_nickSize > MAX_NAME_LEN ? MAX_NAME_LEN : party_data->_nickSize);
+
+		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [PARTY PLAYER] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), party_data->_playerID, utf16, party_data->_nickSize, job);
 
 		CHAR utf8[MAX_NAME_LEN] = { 0 };
 		if (!UTF16toUTF8(utf16, utf8, MAX_NAME_LEN)) {
 			Log::WriteLog(const_cast<LPTSTR>(_T("Error in SWPacketParty : UTF16toUTF8 FAILED")));
 			return;
 		}
-
-		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [PARTY PLAYER %d] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), party_data->_playerID, utf16, party_data->_nickSize, job);
 
 		p_data += sizeof(SWPACKETPARTY_DATA) + party_data->_nickSize + SWPACKETPARTY_DUMMY;
 	}

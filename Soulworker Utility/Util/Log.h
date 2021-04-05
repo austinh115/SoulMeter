@@ -1,4 +1,5 @@
 #pragma once
+#include <tchar.h>
 
 class Log
 {
@@ -15,7 +16,7 @@ public:
         TCHAR Log[MAX_BUFFER_LENGTH] = { 0, };
 
         va_start(ap, data);
-        _vstprintf_s(Log, data, ap);
+        vswprintf_s(Log, data, ap);
         va_end(ap);
 
         GetLocalTime(&SystemTime);

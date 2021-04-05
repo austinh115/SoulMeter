@@ -19,8 +19,10 @@ VOID SWPacketPos::Do() {
 		BYTE job = *(p_data + sizeof(SWPACKETPOS_DATA) + pos_data->_nickSize + 1);
 
 		WCHAR utf16[MAX_NAME_LEN] = { 0 };
-		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPOS_DATA), pos_data->_nickSize);
+		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPOS_DATA), pos_data->_nickSize > MAX_NAME_LEN ? MAX_NAME_LEN : pos_data->_nickSize);
 
+		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [POS PLAYER %d] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), pos_data->_playerID, utf16, pos_data->_nickSize, job);
+		 
 		CHAR utf8[MAX_NAME_LEN] = { 0 };
 		if (!UTF16toUTF8(utf16, utf8, MAX_NAME_LEN)) {
 			Log::WriteLog(const_cast<LPTSTR>(_T("Error in SWPacketPos : UTF16toUTF8 FAILED")));
@@ -49,7 +51,9 @@ VOID SWPacketPos::Debug() {
 		BYTE job = *(p_data + sizeof(SWPACKETPOS_DATA) + pos_data->_nickSize + 1);
 
 		WCHAR utf16[MAX_NAME_LEN] = { 0 };
-		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPOS_DATA), pos_data->_nickSize);
+		memcpy_s(utf16, MAX_NAME_LEN * sizeof(WCHAR), p_data + sizeof(SWPACKETPOS_DATA), pos_data->_nickSize > MAX_NAME_LEN ? MAX_NAME_LEN : pos_data->_nickSize);
+		
+		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [POS PLAYER %d] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), pos_data->_playerID, utf16, pos_data->_nickSize, job);
 
 		CHAR utf8[MAX_NAME_LEN] = { 0 };
 		if (!UTF16toUTF8(utf16, utf8, MAX_NAME_LEN)) {
@@ -57,7 +61,6 @@ VOID SWPacketPos::Debug() {
 			return;
 		}
 
-		Log::WriteLog(const_cast<LPTSTR>(_T("[DEBUG] [POS PLAYER %d] [ID %08x] [NAME = %s] [NICKMEMSIZE = %d] [JOB = %d]")), pos_data->_playerID, utf16, pos_data->_nickSize, job);
 
 		p_data += sizeof(SWPACKETPOS_DATA) + pos_data->_nickSize + SWPACKETPOS_DUMMY;
 	}

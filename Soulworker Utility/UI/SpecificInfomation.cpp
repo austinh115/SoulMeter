@@ -30,7 +30,7 @@ VOID SpecificInformation::Update(BOOL* open) {
 
 	CHAR title[128] = { 0 };
 
-	sprintf_s(title, 128, "%s %s", DAMAGEMETER.GetPlayerName(_playerID), u8"상세 정보");
+	sprintf_s(title, 128, "%s %s", DAMAGEMETER.GetPlayerName(_playerID), u8"More details");
 	ImGui::Begin(title, (bool*)open, ImGuiWindowFlags_None);
 	{
 		sprintf_s(title, 128, "##tab%d", _playerID);
@@ -46,7 +46,7 @@ VOID SpecificInformation::Update(BOOL* open) {
 
 VOID SpecificInformation::UpdateSkillInfo() {
 	
-	ImGui::BeginTabItem(u8"스킬 상세 정보");
+	ImGui::BeginTabItem(u8"Skill details");
 	{
 		UpdateMonsterCombo();
 		
@@ -76,7 +76,7 @@ VOID SpecificInformation::UpdateMonsterCombo() {
 		comboPreview = (*monster)->GetName();
 	}
 
-	if(ImGui::BeginCombo(u8"몬스터", comboPreview, ImGuiComboFlags_HeightLarge)) {
+	if(ImGui::BeginCombo(u8"Monster", comboPreview, ImGuiComboFlags_HeightLarge)) {
 	
 		for (auto itr = (*player)->begin(); itr != (*player)->end(); itr++) {
 			

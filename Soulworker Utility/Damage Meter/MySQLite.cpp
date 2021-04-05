@@ -217,7 +217,7 @@ BOOL MySQL::GetMonsterName(USHORT DB1, UINT32 DB2, CHAR* out_buffer, SIZE_T out_
 		return FALSE;
 
 	if (DB1 == 0) {
-		strcpy_s(out_buffer, out_buffer_length, const_cast<CHAR*>(u8"메이즈 정보 X"));
+		strcpy_s(out_buffer, out_buffer_length, const_cast<CHAR*>(u8"Unknown monster"));
 		return TRUE;
 	}
 
@@ -248,7 +248,7 @@ BOOL MySQL::GetMapName(UINT32 mapID, CHAR* out_buffer, SIZE_T out_buffer_length)
 		return FALSE;
 
 	if (mapID == 0) {
-		strcpy_s(out_buffer, out_buffer_length, const_cast<CHAR*>(u8"공백"));
+		strcpy_s(out_buffer, out_buffer_length, const_cast<CHAR*>(u8"Unknown map"));
 		return TRUE;
 	}
 

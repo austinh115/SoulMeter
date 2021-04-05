@@ -201,6 +201,12 @@ VOID SWPacketMaker::CreateSWPacket(IPv4Packet* packet) {
 			swpacket->Debug();
 #endif
 			// Todo
+				
+			/*printf("OP : %04x\tsize : %04x\n", swheader->_op, swheader->_size);
+
+			for (int i = 0; i < swheader->_size; i++)
+				printf("%02x ", data[i]);
+			printf("\n");*/
 			swpacket->Do();
 
 			delete swpacket;
