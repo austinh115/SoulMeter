@@ -26,6 +26,7 @@ Precautions for use
 2. The developer is not responsible for any disadvantages caused by the use of this program.
 3. You must move the maze to the party or force in status to display the nickname.
 
+----------------------
 
 KR:
 국내에서 서비스 하고 있는 소울워커 RPG의 DPS meter 입니다.
